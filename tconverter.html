@@ -1,9 +1,98 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Document</title>
+    <title>Temperature Converter</title>
 </head>
 <body>
-    This is a Temperature Converter.
+    <style>
+        .main{
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .mainbox{
+            border: 2px solid black;
+        }
+        .header{
+            text-align: center;
+        }
+        .content{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 2px solid black;
+            padding: 24px;
+        }
+        .cdis{
+            width: 50%;
+        }
+        .cbutton{
+            width: 50%;
+        }
+        .inputbox{
+            width: 174px;
+            height: 44px;
+            border: none;
+            text-align: center;
+        }
+        .cbutton > button{
+            width: 176px;
+            height: 48px;
+        }
+    </style>
+    <main class="main">
+        <div class="mainbox">
+            <div class="header">
+                <h4>Temperature Converter</h4>
+            </div>
+            <div class="content">
+                <div class="cdis">
+                    <input type="text" value="0" id="celsius" class="inputbox">
+                </div>
+                <div>
+                    <p> = </p>
+                </div>
+                <div class="cdis">
+                    <input type="text" value="0" id="farenheit" class="inputbox">
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        document.getElementById("celsius").addEventListener("input", () =>{
+            if (document.getElementById("celsius").value == "") {
+                document.getElementById('farenheit').value = '';
+            }else{
+                let cel = parseInt(document.getElementById("celsius").value)
+                if (cel > 243 ){
+                    console.log("High")
+                    document.getElementById('farenheit').value = "Too High Value";
+                }else if (cel < -243 ){
+                    document.getElementById('farenheit').value = "Too Low Value";
+                }else{
+                    document.getElementById('farenheit').value = ((cel*(1.82))+ 32).toFixed(2);
+                }
+            }
+        })
+        document.getElementById("farenheit").addEventListener("input", () =>{
+            if (document.getElementById("farenheit").value == "") {
+                document.getElementById('celsius').value = '';
+            }else{
+                let cel = parseInt(document.getElementById("farenheit").value)
+                if (cel > 475 ){
+                    console.log("High")
+                    document.getElementById('celsius').value = "Too High Value";
+                }else if (cel < -411 ){
+                    document.getElementById('celsius').value = "Too Low Value";
+                }else{
+                    document.getElementById('celsius').value = ((cel*(1.82))+ 32).toFixed(2);
+                }
+            }
+            let far = parseInt(document.getElementById("farenheit").value)
+            document.getElementById('celsius').value = ((far - 32 ) / 1.82).toFixed(2);
+        })
+    </script>
 </body>
 </html>
