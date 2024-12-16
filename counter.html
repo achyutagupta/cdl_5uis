@@ -4,6 +4,65 @@
     <title>Counter</title>
 </head>
 <body>
-    <p>This is a counter app.</p>
+    <style>
+        .main{
+            margin: 0 auto;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .mainbox{
+            border: 2px solid black;
+        }
+        .header{
+            text-align: center;
+        }
+        .content{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-top: 2px solid black;
+            padding: 24px;
+        }
+        .cdis{
+            width: 50%;
+        }
+        .cbutton{
+            width: 50%;
+        }
+        #number{
+            width: 174px;
+            height: 44px;
+            border: none;
+            text-align: center;
+        }
+        .cbutton > button{
+            width: 176px;
+            height: 48px;
+        }
+    </style>
+    <main class="main">
+        <div class="mainbox">
+            <div class="header">
+                <h4>Counter</h4>
+            </div>
+            <div class="content">
+                <div class="cdis">
+                    <input type="number" value=0 disabled id="number">
+                </div>
+                <div class="cbutton">
+                    <Button id="btn">Count</Button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        document.getElementById("btn").addEventListener("click", () =>{
+            console.log("Value",document.getElementById("number").value) 
+            document.getElementById("number").value =  parseInt(document.getElementById("number").value) + 1;
+        })
+    </script>
 </body>
 </html>
