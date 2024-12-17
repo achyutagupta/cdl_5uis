@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flight Booking</title>
+</head>
+<body>
+    <style>
+        .main{
+            box-sizing: border-box;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .mainbox{
+            width: 416px;
+            padding: 0px;
+            border: 2px solid black;
+        }
+        .title{
+            width: 100%;
+            margin: none;
+            padding: 24px 0px 24px 0px;
+            text-align: center;
+            border-bottom: 2px solid black;
+        }
+        .form{
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: column;
+        }
+        .selector{
+            margin: 8px 0px 8px 0px;
+            width: 100%;
+            height: 48px;
+        }
+        .date{
+            width: 100%;
+            border: none;
+            padding: 0px;
+            background-color: antiquewhite;
+            height: 48px;
+            margin: 8px 0px 8px 0px;
+        }
+        .book{
+            margin: 8px 0px 8px 0px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            width: 100%;
+            height: 48px;
+            background-color: purple;
+            color: white;
+        }
+    </style>
+    <main>
+        <div class="main">
+            <div class="mainbox">
+                <div class="title">
+                    <h2>Flight Booking</h2>
+                </div>
+                <div class="form">
+                    <select name="bookingtype" id="booking" class="selector">
+                        <option value="owb">One-Way Flight Booking</option>
+                        <option value="rfb">Return Flight Booking</option>
+                    </select>
+                    <input type="text" class="date" id="depdate" value="">
+                    <input type="text" class="date" id="retdate" value="">
+                    <button class="book" id="btn">Book Flight</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        const date = new Date()
+        let placeholder = date.getDate(Date.now())+"."+date.getMonth(Date.now())+"."+date.getFullYear(Date.now());
+        let depdate = document.getElementById('depdate')
+        let retdate = document.getElementById('retdate')
+        depdate.setAttribute('placeholder',placeholder);
+        retdate.setAttribute('placeholder',placeholder);
+        let selector = document.getElementById('booking')
+        selector.addEventListener('change',(e)=>{
+            if (e.target.value == 'owb'){
+                retdate.setAttribute('placeholder', ' ');
+            }else if (e.target.value == 'rfb'){
+                retdate.setAttribute('placeholder',placeholder)
+            }
+        })
+        depdate.addEventListener('change',(e)=>{
+            let val = e.target.value;
+            if (!validatedate(val)) {
+                document.getElementById('btn').style.backgroundColor = 'plum';
+            }
+        })
+        retdate.addEventListener('change',()=>{
+            let val = toString(e.target.value);
+            if (!validatedate(val)) {
+                document.getElementById('btn').style.backgroundColor = 'plum';
+            }
+        })
+        function validatedate(val) {
+            const datearr = val.split("."); 
+            const dayval = parseInt(datearr[0]);
+            const mval = parseInt(datearr[1]);
+            const yval = parseInt(datearr[2]);
+            const newdate = new Date(yval,mval,dayval);
+            if (isNaN(dayval) || isNaN(mval) || isNaN(yval)) {
+                return false
+            }
+            if (dayval < 1 || dayval > 31 || mval < 1 || mval > 12) {
+                return false
+            }
+            if (mval == 2) {
+                if (yval % 4 == 0) {
+                    if (dayval > 29) {
+                        return false
+                    }
+                } else {
+                    if (dayval > 28) {
+                        return false
+                    }
+                }
+            } else if ([4, 6, 9, 11].includes(mval)) {
+                if (dayval > 30) {
+                    return false
+                }
+            }
+            return true
+        }
+    </script>
+</body>
+</html>
