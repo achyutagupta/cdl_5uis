@@ -55,7 +55,7 @@
                     <p> = </p>
                 </div>
                 <div class="cdis">
-                    <input type="text" value="0" id="farenheit" class="inputbox">
+                    <input type="text" value="32" id="farenheit" class="inputbox">
                 </div>
             </div>
         </div>
@@ -80,14 +80,14 @@
             if (document.getElementById("farenheit").value == "") {
                 document.getElementById('celsius').value = '';
             }else{
-                let cel = parseInt(document.getElementById("farenheit").value)
-                if (cel > 475 ){
+                let fer = parseInt(document.getElementById("farenheit").value)
+                if (fer > 475 ){
                     console.log("High")
                     document.getElementById('celsius').value = 475;
-                }else if (cel < -411 ){
+                }else if (fer < -411 ){
                     document.getElementById('celsius').value = -411;
                 }else{
-                    document.getElementById('celsius').value = ((cel*(1.82))+ 32).toFixed(2);
+                    document.getElementById('celsius').value = ((fer - 32)/ 1.82).toFixed(2);
                 }
             }
         })
