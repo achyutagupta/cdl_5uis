@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> CRUD </title>
+</head>
+<body>
+    <style>
+        .main{
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100vh;
+        }
+        .mainbox{
+            border: 2px solid black;
+            width: 800px;
+            height: 352px;
+        }
+        .header{
+            width: 100%;
+            height: 76px;
+            border-bottom: 2px solid black;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .title{
+            margin: 0 auto;
+        }
+        .form{
+            width: 100%;
+            height: 276px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .formbox{
+            width: 752px;
+            height: 228px;
+            margin: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .leftbox{
+            width: 320px;
+            height: 100%;
+            padding-right: 22px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .searchbox{
+            width: 100%;
+        }
+        .list{
+            width: 100%;
+            height: 152px;
+            background-color: antiquewhite;
+            overflow: auto;
+        }
+        .selected{
+            background-color: aqua;
+        }
+        .rightbox{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 416px;
+            height: 100%;
+        }
+        .namebox{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 416px;
+            height: 66px;
+            margin-bottom: 24px;
+        }
+        .namebox > label{
+            width: 416px;
+        }
+        .namebox > input {
+            width: 416px;
+            height: 40px;
+            padding: none;
+        }
+        .surnamebox{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 416px;
+            height: 66px;
+            margin-bottom: 24px;
+        }
+        .surnamebox > label{
+            width: 416px;
+        }
+        .surnamebox > input {
+            width: 416px;
+            height: 40px;
+            padding: none;
+        }
+        .btnbox{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 416px;
+            height: 48px;
+        }
+        .btn{
+            width: 133.33px;
+            height: 48px;
+            margin-right: 8px;
+        }
+    </style>
+    <main>
+        <div class="main">
+            <div class="mainbox">
+                <div class="header">
+                    <h2 class="title"> CRUD </h2>
+                </div>
+                <div class="form">
+                    <div class="formbox">
+                        <div class="leftbox">
+                            <div class="searchbox">
+                                <label for="search">Search:</label>
+                                <br>
+                                <input type="text" name="search" id="search">
+                            </div>
+                            <div class="list" id="list">
+                                
+                            </div>
+                        </div>
+                        <div class="rightbox">
+                            <div class="namebox">
+                                <label for="name">Name:</label>
+                                <br>
+                                <input type="text" name="name" id="name" oninput="updatebuttons()" maxlength="20">
+                            </div>
+                            <div class="surnamebox">
+                                <label for="surname">Surname:</label>
+                                <br>
+                                <input type="text" name="surname" id="surname" oninput="updatebuttons()" maxlength="20">
+                            </div>
+                            <div class="btnbox">
+                                <button class="btn" id="create" disabled>Create</button>
+                                <button class="btn" id="update" disabled>Update</button>
+                                <button class="btn" id="delete" disabled>Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        var list = [];
+        var namei = document.getElementById('name');
+        var surname = document.getElementById('surname');
+        var searchterm = document.getElementById('search') ;
+        var selecteduser ;
+        function main(){
+            namei.value = "";
+            surname.value = "";
+            document.getElementById('list').innerHTML = '';
+            var filterlist = list.filter((user) => {
+                console.log(user)
+                return user.Surname.includes(searchterm.value);
+            })
+            filterlist.forEach((element,i)=> {
+                var ele = document.createElement('div');
+                ele.id = "user"+i;
+                ele.className = "user";
+                ele.innerHTML = element.Surname+", "+element.Name;
+                document.getElementById('list').appendChild(ele);
+                if((selecteduser!=null) && selecteduser == i){
+                    ele.className = 'selected'
+                    document.getElementById('name').value = list[selecteduser].Name;
+                    document.getElementById('surname').value = list[selecteduser].Surname;
+                }
+                ele.addEventListener('click', (e)=>{
+                    selecteduser = parseInt(e.target.id.substring(4));
+                    main();
+                })
+            });
+            updatebuttons()
+        }
+        function updatebuttons(){
+            var updatebtn = document.getElementById("update");
+            var createbtn = document.getElementById("create");
+            var deletebtn = document.getElementById("delete");
+            if(selecteduser!=null){
+                deletebtn.removeAttribute("disabled");
+            }else{
+                deletebtn.setAttribute("disabled","");
+            }
+            if(selecteduser==null || (list[selecteduser][0] == name.value && list[selecteduser][1]== surname.value)){
+                updatebtn.setAttribute("disabled","");
+            }else{
+                updatebtn.removeAttribute("disabled");
+            }
+            if((namei.value == "" || surname.value == "")){
+                createbtn.setAttribute("disabled","");
+            }else{
+                createbtn.removeAttribute("disabled");
+            }
+        }
+        document.getElementById('create').addEventListener('click', ()=>{
+            var user = {
+                Name : document.getElementById('name').value,
+                Surname : document.getElementById('surname').value
+            }
+            list.push(user);
+            main();
+        })
+        document.getElementById('update').addEventListener('click',() =>{
+            list[selecteduser] = {
+                Name : namei.value,
+                Surname : namei.value
+            }
+            main();
+        })
+        document.getElementById('delete').addEventListener('click',()=>{
+            list.splice(selecteduser,1);
+            main();
+        })
+        document.getElementById('search').addEventListener('input', ()=>{
+            namei.value = "";
+            surname.value = "";
+            main();
+        })      
+    </script>
+</body>
+</html>
