@@ -68,9 +68,9 @@
                 let cel = parseInt(document.getElementById("celsius").value)
                 if (cel > 243 ){
                     console.log("High")
-                    document.getElementById('farenheit').value = "Too High Value";
+                    document.getElementById('farenheit').value = 243;
                 }else if (cel < -243 ){
-                    document.getElementById('farenheit').value = "Too Low Value";
+                    document.getElementById('farenheit').value = -243;
                 }else{
                     document.getElementById('farenheit').value = ((cel*(1.82))+ 32).toFixed(2);
                 }
@@ -83,9 +83,9 @@
                 let cel = parseInt(document.getElementById("farenheit").value)
                 if (cel > 475 ){
                     console.log("High")
-                    document.getElementById('celsius').value = "Too High Value";
+                    document.getElementById('celsius').value = 475;
                 }else if (cel < -411 ){
-                    document.getElementById('celsius').value = "Too Low Value";
+                    document.getElementById('celsius').value = -411;
                 }else{
                     document.getElementById('celsius').value = ((cel*(1.82))+ 32).toFixed(2);
                 }
