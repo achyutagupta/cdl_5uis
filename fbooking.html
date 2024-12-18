@@ -56,6 +56,9 @@
             background-color: purple;
             color: white;
         }
+        .book:disabled {
+            background-color: plum;
+        }
     </style>
     <main>
         <div class="main">
@@ -70,7 +73,7 @@
                     </select>
                     <input type="text" class="date" id="depdate" value="">
                     <input type="text" class="date" id="retdate" value="">
-                    <button class="book" id="btn">Book Flight</button>
+                    <button class="book" id="btn" disabled>Book Flight</button>
                 </div>
             </div>
         </div>
@@ -92,14 +95,14 @@
         })
         depdate.addEventListener('change',(e)=>{
             let val = e.target.value;
-            if (!validatedate(val)) {
-                document.getElementById('btn').style.backgroundColor = 'plum';
+            if (validatedate(val)) {
+                document.getElementById('btn').removeAttribute('disabled');
             }
         })
-        retdate.addEventListener('change',()=>{
+        retdate.addEventListener('change',(e)=>{
             let val = toString(e.target.value);
-            if (!validatedate(val)) {
-                document.getElementById('btn').style.backgroundColor = 'plum';
+            if (validatedate(val)) {
+                document.getElementById('btn').removeAttribute('disabled');
             }
         })
         function validatedate(val) {
