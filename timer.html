@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Timer</title>
+</head>
+<body>
+    <style>
+        .main{
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .mainbox{
+            border: 2px solid black;
+            width: 416px;
+            height: 280px;
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            flex-direction: column;
+        }
+        .header{
+            width: 100%;
+            height: 76px;
+            border-bottom: 2px solid black;
+            text-align: center;
+        }
+        .body{
+            width: 100%;
+            height: 204px;
+            padding: 24px;
+        }
+        .form{
+            margin: none;
+            width: 368px;
+        }
+        .sec{
+            width: 100%;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: stretch;
+        }
+        .btnbox{
+            width: 100%;
+            height: 48px;
+        }
+        .btnbox > button {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            margin:none;
+            border: none;
+        }
+    </style>
+    <main>
+        <div class="main">
+            <div class="mainbox">
+                <div class="header">
+                    <h2 class="title">
+                        Timer
+                    </h2>
+                </div>
+                <div class="body">
+                    <div class="form">
+                        <div class="sec">
+                            <label for="meter">Elapsed Time:</label>
+                            <progress id="timer" value="0" max="30"></progress>
+                            <p id="ticker">0.0 s</p>
+                        </div>
+                        <div class="sec">
+                            <label for="slider">Duration: </label>
+                            <input type="range" min="1" max="30" value="15" class="slider" id="slider">
+                        </div>
+                        <div class="btnbox">
+                            <button id="reset">Reset Timer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        var timer = document.getElementById('timer')
+        var ticker = document.getElementById('ticker')
+        var slider = document.getElementById('slider')
+        var check = false; 
+        var timern = new Date;
+        function main(){
+            timer.max = slider.value;
+            var currval = timer.value;
+            if (slider.value > currval){
+                setInterval(()=>{
+                    var clock = (((new Date).getTime() - timern.getTime())/1000).toFixed(1);
+                    timer.value = Math.floor(clock);
+                    ticker.innerText = timer.value+".0 s";
+                },1000)
+            }
+        }
+        slider.addEventListener('change',()=>{
+            main();
+        })
+        document.getElementById('reset',()=>{
+            timer.value = 0;
+        })
+        main();
+    </script>
+</body>
+</html>
